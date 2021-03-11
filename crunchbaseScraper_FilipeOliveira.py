@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup  # to remove HTML tags from HTML content
 from selenium.webdriver.common.keys import Keys  # so I can press the Enter Key in the search fields
 import pandas as pd # make use of Dataframes and read from and write to csv/excel files.
 
-# This script extracts multiple business information fields from crunchdatabase for a given list of companies' URLs.
+# This script extracts multiple businesses information from crunchdatabase for a given list of companies' URLs.
 
 # High level ALGORITHM
 # 0 - Read list of URLs from csv file
