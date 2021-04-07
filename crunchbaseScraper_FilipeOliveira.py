@@ -41,11 +41,11 @@ class Business:
 
 # method created to convert HTML to String format
 def HTMLtoText(HTMLelement):
-    textContent = HTMLelement.get_attribute('innerHTML')
+    htmlContent = HTMLelement.get_attribute('innerHTML')
     # Beautiful soup removes HTML tags from content, if it exists.
-    soup = BeautifulSoup(textContent, features="lxml")
-    rawString = soup.get_text().strip()  # Leading and trailing whitespaces are removed
-    return rawString
+    rawString = BeautifulSoup(htmlContent, features="lxml")
+    textContent = rawString.get_text().strip()  # Leading and trailing whitespaces are removed
+    return textContent
 
 #  Connect to Browser
 DRIVER_PATH = "C:/Users/filip/Documents/PythonFiles/chromedriver"
