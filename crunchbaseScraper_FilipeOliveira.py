@@ -102,8 +102,6 @@ for i in range(numberOfBusiness):
     except:
         pitch_line = ""
 
-
-
     # In this section, the whole About section is stored in one list, which is treated dynamically per item.
     # It checks if the item is the one we need by checking the tooltip message associated with each item.
     # 4-6th fields: Location, Size and Website
@@ -128,7 +126,6 @@ for i in range(numberOfBusiness):
             elif tooltip == 'Website':
                 websiteSelector = ul_AboutItems[i]
                 website = HTMLtoText(websiteSelector)
-        # size = HTMLtoText(sizeSelector)
     except:
         hq_location = ""
         size = ""
@@ -154,9 +151,10 @@ for i in range(numberOfBusiness):
 
     # 9th field: Legal name
     try:
-        legalNameSelector = browser.find_element_by_css_selector(".text_and_value .ng-star-inserted:nth-child(6)")
-        legal_nameWITHtitle = HTMLtoText(legalNameSelector) # has title "Legal Name " before the actual value
-        legal_name = legal_nameWITHtitle.partition("Name")[2] # splits string in 3 and get right side of it after "Name"
+        legalNameSelector = browser.find_element_by_css_selector\
+            (".text_and_value .ng-star-inserted~ .ng-star-inserted+ "
+            ".ng-star-inserted .ng-star-inserted .ng-star-inserted span.ng-star-inserted")
+        legal_name = HTMLtoText(legalNameSelector) # has title "Legal Name " before the actual value
     except:
         legal_name = ""
 
@@ -289,5 +287,5 @@ for i in range(numberOfBusiness):
 
 # Save DataFrame into a CSV File
 PATH = "C:/Users/filip/Documents/PythonFiles/"
-CSV_FILE = "BusinessInfo4.csv"
+CSV_FILE = "BusinessInfo5.csv"
 df.to_csv(PATH+CSV_FILE, sep=',')
