@@ -287,5 +287,5 @@ for i in range(numberOfBusiness):
 
 # Save DataFrame into a CSV File
 PATH = "C:/Users/filip/Documents/PythonFiles/"
-CSV_FILE = "BusinessInfo5.csv"
+CSV_FILE = "BusinessInfo2.csv"
 df.to_csv(PATH+CSV_FILE, sep=',')
