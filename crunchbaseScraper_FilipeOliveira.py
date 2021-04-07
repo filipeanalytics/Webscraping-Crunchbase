@@ -95,36 +95,43 @@ for i in range(numberOfBusiness):
     except:
         name = ""
 
-    # 3rd field: Ptich line
+    # 3rd field: Pitch line
     try:
         pitchSelector = browser.find_element_by_css_selector(".description")
         pitch_line = HTMLtoText(pitchSelector)
     except:
         pitch_line = ""
 
-    if name == "Augmenta": # Augmenta is the only excpetion to the regular treatment of hq_location and size.
+
+
+    # In this section, the whole About section is stored in one list, which is treated dynamically per item.
+    # It checks if the item is the one we need by checking the tooltip message associated with each item.
+    # 4-6th fields: Location, Size and Website
+    try:
+        # ul_AboutItems returns a list of all 6 items in the About section (location, size...website...)
+        ul_AboutItems = browser.find_elements_by_css_selector(
+            ".icon_and_value .ng-star-inserted .ng-star-inserted .ng-star-inserted .component--field-formatter")
+        # ul_TooltipItems returns a list of the 6 tooltip messages associated with each item in the About section.
+        ul_TooltipItems = browser.find_elements_by_css_selector(
+            ".icon_and_value .ng-star-inserted .ng-star-inserted .mat-tooltip-trigger ")
+        # navigates through all items in the list of About items
+        for i in range(len(ul_TooltipItems)):
+            attr = ul_TooltipItems[i].get_attribute("aria-describedby")  # ex: cdk-describedby-message-0
+            tooltipMessageSelector = browser.find_element_by_id(attr)  # get specific tooltip message head
+            tooltip = HTMLtoText(tooltipMessageSelector)  # get specific tooltip message. ex: 'Headquarters Location'
+            if tooltip == 'Headquarters Location':
+                hqLocSelector = ul_AboutItems[i]
+                hq_location = HTMLtoText(hqLocSelector)
+            elif tooltip == 'Number of Employees':
+                sizeSelector = ul_AboutItems[i]
+                size = HTMLtoText(sizeSelector)
+            elif tooltip == 'Website':
+                websiteSelector = ul_AboutItems[i]
+                website = HTMLtoText(websiteSelector)
+        # size = HTMLtoText(sizeSelector)
+    except:
         hq_location = ""
         size = ""
-    else:
-        # 4th field: HQ location
-        try:
-            hqLocSelector = browser.find_element_by_css_selector(".icon_and_value .ng-star-inserted:nth-child(1) label-with-icon")
-            hq_location = HTMLtoText(hqLocSelector)
-        except:
-            hq_location = ""
-
-        # 5th field: Size
-        try:
-            sizeSelector = browser.find_element_by_css_selector(".icon_and_value .ng-star-inserted:nth-child(2) .link-accent")
-            size = HTMLtoText(sizeSelector)
-        except:
-            size = ""
-
-    # 6th field: Website
-    try:
-        websiteSelector = browser.find_element_by_css_selector(".layout-align-start-end.link-accent")
-        website = HTMLtoText(websiteSelector)
-    except:
         website = ""
 
     # 7th field: Industries
@@ -282,5 +289,5 @@ for i in range(numberOfBusiness):
 
 # Save DataFrame into a CSV File
 PATH = "C:/Users/filip/Documents/PythonFiles/"
-CSV_FILE = "BusinessInfo3.csv"
+CSV_FILE = "BusinessInfo4.csv"
 df.to_csv(PATH+CSV_FILE, sep=',')
